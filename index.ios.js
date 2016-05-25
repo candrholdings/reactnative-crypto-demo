@@ -20,19 +20,24 @@ import {
 
 class EncryptNatively extends Component {
   componentDidMount() {
-    CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
-      if (err) {
-        alert(`Failed to encrypt: ${err.message}`);
-      } else {
-        CryptoProvider.decrypt(cipherText, '1234567890123456', (err, plainText) => {
-          if (err) {
-            alert(`Failed to decrypt: ${err.message}`);
-          } else {
-            alert(`Plain text: ${plainText}`);
-          }
-        });
-      }
-    });
+    CryptoProvider.encrypt('Hello', '1234567890123456')
+      .then(
+        cipherText => {
+          return CryptoProvider.decrypt(cipherText, '1234567890123456');
+        },
+        err => {
+          alert(`Failed to encrypt: ${err.message}`);
+        }
+      )
+      .then(
+        plainText => {
+          alert(`Plain text: ${plainText}`);
+        },
+        err => {
+          alert(`Failed to decrypt: ${err.message}`);
+        }
+      )
+      .done();
   }
 
   render() {

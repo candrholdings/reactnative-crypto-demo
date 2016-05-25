@@ -10,7 +10,8 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
     RCT_EXTERN_METHOD(
       decrypt:(NSString *) base64CipherText
       secret:(NSString *) secret
-      callback:(RCTResponseSenderBlock *) callback
+      resolve:(RCTPromiseResolveBlock) resolve
+      reject:(RCTPromiseRejectBlock) reject
     )
     ```
 
@@ -19,18 +20,23 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
   2. Add the following code to the file `CryptoProvider.swift`
 
     ```swift
-    @objc func decrypt(base64CipherText: String, secret: String, callback: RCTResponseSenderBlock) -> Void {
+    @objc func decrypt(
+      base64CipherText: String,
+      secret: String,
+      resolve: RCTPromiseResolveBlock,
+      reject: RCTPromiseRejectBlock
+    ) -> Void {
       guard !secret.isEmpty
-        else { return callback(["must specify \"secret\""]) }
+        else { return reject("EINVAL", "must specify \"secret\"", nil) }
 
       guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
-        else { return callback(["\"secret\" is malformed"]) }
+        else { return reject("EINVAL", "\"secret\" is malformed", nil) }
 
       guard let cipherTextData = NSData(base64EncodedString: base64CipherText, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-        else { return callback(["\"base64CipherText\" is malformed"]) }
+        else { return reject("EINVAL", "\"base64CipherText\" is malformed", nil) }
 
       guard let plainTextData = NSMutableData(length: Int(cipherTextData.length) + kCCBlockSizeAES128)
-        else { return callback(["cannot allocate memory for plain text"]) }
+        else { return reject("ENOMEM", "cannot allocate memory for plain text", nil) }
 
       var numBytesDecrypted: size_t = 0
 
@@ -49,17 +55,14 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
       )
 
       guard UInt32(cryptStatus) == UInt32(kCCSuccess)
-        else { return callback(["decrypt failed"]) }
+        else { return reject("EFAIL", "decrypt failed", nil) }
 
       plainTextData.length = numBytesDecrypted
 
       guard let plainText = NSString(data: plainTextData, encoding: NSUTF8StringEncoding)
-        else { return callback(["cannot decrypt non-text"]) }
+        else { return reject("EFAIL", "cannot decrypt non-text", nil) }
 
-      return callback([
-        NSNull(),
-        plainText
-      ])
+      return resolve(plainText)
     }
     ```
 
@@ -69,19 +72,24 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 
     ```js
     componentDidMount() {
-      CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
-        if (err) {
-          alert(`Failed to encrypt: ${err.message}`);
-        } else {
-          CryptoProvider.decrypt(cipherText, '1234567890123456', (err, plainText) => {
-            if (err) {
-              alert(`Failed to decrypt: ${err.message}`);
-            } else {
-              alert(`Plain text: ${plainText}`);
-            }
-          });
-        }
-      });
+      CryptoProvider.encrypt('Hello', '1234567890123456')
+        .then(
+          cipherText => {
+            return CryptoProvider.decrypt(cipherText, '1234567890123456');
+          },
+          err => {
+            alert(`Failed to encrypt: ${err.message}`);
+          }
+        )
+        .then(
+          plainText => {
+            alert(`Plain text: ${plainText}`);
+          },
+          err => {
+            alert(`Failed to decrypt: ${err.message}`);
+          }
+        )
+        .done();
     }
     ```
 
