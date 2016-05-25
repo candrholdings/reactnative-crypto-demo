@@ -14,7 +14,21 @@ import {
   View
 } from 'react-native';
 
+import {
+  CryptoProvider
+} from 'NativeModules';
+
 class EncryptNatively extends Component {
+  componentDidMount() {
+    CryptoProvider.translateToHawaiian('Hello', (err, hawaiian) => {
+      if (err) {
+        alert(`Failed to translate: ${err.message}`);
+      } else {
+        alert(`In Hawaiian: ${hawaiian}`);
+      }
+    });
+  }
+
   render() {
     return (
       <View style={ styles.container }>

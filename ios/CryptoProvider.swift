@@ -10,4 +10,11 @@ import Foundation
 
 @objc(CryptoProvider)
 class CryptoProvider: NSObject {
+  @objc func translateToHawaiian(english: String, callback: RCTResponseSenderBlock) -> Void {
+    if (english == "Hello") {
+      callback([ NSNull(), "Aloha" ])
+    } else {
+      callback([ [ "message": "I don't know" ] ])
+    }
+  }
 }

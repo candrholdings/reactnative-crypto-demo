@@ -11,4 +11,9 @@
 
 @interface RCT_EXTERN_MODULE(CryptoProvider, NSObject)
 
+RCT_EXTERN_METHOD(
+  translateToHawaiian:(NSString *) english
+  callback:(RCTResponseSenderBlock *) callack
+)
+
 @end
