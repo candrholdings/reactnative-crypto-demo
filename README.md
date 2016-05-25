@@ -3,7 +3,7 @@
 We are going to add another Swift method that encrypt a string with a secret, using AES128 in [`CommonCrypto`](https://developer.apple.com/cryptography/) from `Security.framework`.
 
 1. Prepares our project to use `CommonCrypto` from `Security.framework`
-  1. Open project settings
+  1. In Xcode, open project settings
     1. In the "Linked Frameworks and Libraries" section, find and add `Security.framework` reference
   2. In `EncryptNatively-Bridging-Header.h`
     1. Add the following code so that every classes in the project can consume the `CommonCrypto` library
