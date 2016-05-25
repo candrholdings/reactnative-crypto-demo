@@ -10,11 +10,15 @@ import Foundation
 
 @objc(CryptoProvider)
 class CryptoProvider: NSObject {
-  @objc func translateToHawaiian(english: String, callback: RCTResponseSenderBlock) -> Void {
+  @objc func translateToHawaiian(
+    english: String,
+    resolve: RCTPromiseResolveBlock,
+    reject: RCTPromiseRejectBlock
+  ) -> Void {
     if (english == "Hello") {
-      callback([ NSNull(), "Aloha" ])
+      resolve("Aloha")
     } else {
-      callback([ [ "message": "I don't know" ] ])
+      reject("ENOENT", "I don't know", nil)
     }
   }
 }

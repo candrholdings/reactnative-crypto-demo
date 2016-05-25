@@ -13,7 +13,8 @@
 
 RCT_EXTERN_METHOD(
   translateToHawaiian:(NSString *) english
-  callback:(RCTResponseSenderBlock *) callack
+  resolve:(RCTPromiseResolveBlock *) resolve
+  reject:(RCTPromiseRejectBlock *) reject
 )
 
 @end
