@@ -1,6 +1,6 @@
 # Step 3: Adds an encrypt method
 
-We are going to add another Swift method that encrypt a string with a secret, using AES128 in `CommonCrypto` from `Security.framework`.
+We are going to add another Swift method that encrypt a string with a secret, using AES128 in [`CommonCrypto`](https://developer.apple.com/cryptography/) from `Security.framework`.
 
 1. Prepares our project to use `CommonCrypto` from `Security.framework`
   1. Open project settings
