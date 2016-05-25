@@ -1,15 +1,15 @@
 # Step 2: Add a new Swift method
 
-We are going to add a Swift method and returns result asynchronously.
+We are going to add a Swift method. The method will translate English into Hawaiian asynchronously.
 
 1. Add a method definition to Objective-C class
-  1. Open `CryptoProvider.m`
+  1. Open `CryptoProvider.m`, it holds all method definitions
   2. Add the following code to the class
 
      ```objective-c
      RCT_EXTERN_METHOD(
        TranslateToHawaiian:(NSString *) english
-       callback:(RCTResponseSenderBlock *) callack
+       callback:(RCTResponseSenderBlock *) callback
      )
      ```
 
