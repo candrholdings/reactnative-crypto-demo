@@ -2,7 +2,7 @@
 
 We are going to add an UI form to input text and secret.
 
-1. Uses `bluebird` package to convert call pattern
+1. Uses `bluebird` package to convert call pattern from Node.js to Promise interface
   1. Promise interface helps simplify asynchronous call pattern
     1. Since React Native is using Node.js asynchronous call pattern, we will translate it into Promise by using `Promise.promisify` function from `bluebird`
   2. At project root, type `npm install bluebird --save`
