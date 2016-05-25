@@ -93,5 +93,5 @@ We are going to add another Swift method that encrypt a string with a secret, us
      }
      ```
 
-5. Verifying the result
+5. Verify the result
   1. After running the code above, encrypting `Hello` with secret `1234567890123456` should yield `+szA6t7l9kO128ylajHQ==` in BASE64
