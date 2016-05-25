@@ -10,30 +10,35 @@ import Foundation
 
 @objc(CryptoProvider)
 class CryptoProvider: NSObject {
-  @objc func translateToHawaiian(english: String, callback: RCTResponseSenderBlock) -> Void {
+  @objc func translateToHawaiian(
+    english: String,
+    resolve: RCTPromiseResolveBlock,
+    reject: RCTPromiseRejectBlock
+  ) -> Void {
     if (english == "Hello") {
-      callback([ NSNull(), "Aloha" ])
+      resolve("Aloha")
     } else {
-      callback([ [ "message": "I don't know" ] ])
+      reject("ENOENT", "I don't know", nil)
     }
   }
 
   @objc func encrypt(
     plainText: String,
     secret: String,
-    callback: RCTResponseSenderBlock
+    resolve: RCTPromiseResolveBlock,
+    reject: RCTPromiseRejectBlock
   ) -> Void {
     guard !secret.isEmpty
-      else { return callback(["must specify \"secret\""]) }
+      else { return reject("EINVAL", "must specify \"secret\"", nil) }
 
     guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
-      else { return callback(["\"secret\" is malformed"]) }
+      else { return reject("EINVAL", "\"secret\" is malformed", nil) }
 
     guard let plainTextData = plainText.dataUsingEncoding(NSUTF8StringEncoding)
-      else { return callback(["\"plain text\" is malformed"]) }
+      else { return reject("EINVAL", "\"plain text\" is malformed", nil) }
 
     guard let cipherTextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
-      else { return callback(["cannot allocate memory for cipher text"]) }
+      else { return reject("ENOMEM", "cannot allocate memory for cipher text", nil) }
 
     var numBytesEncrypted: size_t = 0
 
@@ -49,31 +54,33 @@ class CryptoProvider: NSObject {
       UnsafeMutablePointer<UInt8>(cipherTextData.mutableBytes),
       size_t(cipherTextData.length),
       &numBytesEncrypted
-    );
+    )
 
     guard UInt32(cryptStatus) == UInt32(kCCSuccess)
-      else { return callback(["encrypt failed"]) }
+      else { return reject("EFAIL", "encrypt failed", nil) }
 
     cipherTextData.length = numBytesEncrypted
 
-    callback([
-      NSNull(),
-      cipherTextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed)
-    ])
+    resolve(cipherTextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed))
   }
-  
-  @objc func decrypt(base64CipherText: String, secret: String, callback: RCTResponseSenderBlock) -> Void {
+
+  @objc func decrypt(
+    base64CipherText: String,
+    secret: String,
+    resolve: RCTPromiseResolveBlock,
+    reject: RCTPromiseRejectBlock
+  ) -> Void {
     guard !secret.isEmpty
-      else { return callback(["must specify \"secret\""]) }
+      else { return reject("EINVAL", "must specify \"secret\"", nil) }
 
     guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
-      else { return callback(["\"secret\" is malformed"]) }
+      else { return reject("EINVAL", "\"secret\" is malformed", nil) }
 
     guard let cipherTextData = NSData(base64EncodedString: base64CipherText, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-      else { return callback(["\"base64CipherText\" is malformed"]) }
+      else { return reject("EINVAL", "\"base64CipherText\" is malformed", nil) }
 
     guard let plainTextData = NSMutableData(length: Int(cipherTextData.length) + kCCBlockSizeAES128)
-      else { return callback(["cannot allocate memory for plain text"]) }
+      else { return reject("ENOMEM", "cannot allocate memory for plain text", nil) }
 
     var numBytesDecrypted: size_t = 0
 
@@ -89,19 +96,16 @@ class CryptoProvider: NSObject {
       UnsafeMutablePointer<UInt8>(plainTextData.mutableBytes),
       size_t(plainTextData.length),
       &numBytesDecrypted
-    );
+    )
 
     guard UInt32(cryptStatus) == UInt32(kCCSuccess)
-      else { return callback(["decrypt failed"]) }
+      else { return reject("EFAIL", "decrypt failed", nil) }
 
     plainTextData.length = numBytesDecrypted
 
     guard let plainText = NSString(data: plainTextData, encoding: NSUTF8StringEncoding)
-      else { return callback(["cannot decrypt non-text"]) }
+      else { return reject("EFAIL", "cannot decrypt non-text", nil) }
 
-    return callback([
-      NSNull(),
-      plainText
-    ])
+    resolve(plainText)
   }
 }
