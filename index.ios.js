@@ -35,8 +35,8 @@ class EncryptNatively extends Component {
 
         return CryptoProvider.decrypt(ciphertext, secret);
       })
-      .then(plainText => {
-        this.setState({ plainText });
+      .then(plaintext => {
+        this.setState({ plaintext });
       });
   }
 
@@ -70,7 +70,7 @@ class EncryptNatively extends Component {
         <Text style={ styles.welcome }>
           Encrypt with AES128
         </Text>
-        <Text style={ styles.labels }>Input plain text</Text>
+        <Text style={ styles.labels }>Input plaintext</Text>
         <TextInput
           autoFocus={ true }
           onChangeText={ this.onInputStringChange.bind(this) }
@@ -89,11 +89,11 @@ class EncryptNatively extends Component {
           style={ styles.inputs }
           value={ this.state.ciphertext }
         />
-        <Text style={ styles.labels }>Plain text</Text>
+        <Text style={ styles.labels }>Plaintext</Text>
         <TextInput
           editable={ false }
           style={ styles.inputs }
-          value={ this.state.plainText }
+          value={ this.state.plaintext }
         />
       </View>
     );
