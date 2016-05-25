@@ -20,11 +20,11 @@ import {
 
 class EncryptNatively extends Component {
   componentDidMount() {
-    CryptoProvider.translateToHawaiian('Hello', (err, hawaiian) => {
+    CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
       if (err) {
-        alert(`Failed to translate: ${err.message}`);
+        alert(`Failed to encrypt: ${err.message}`);
       } else {
-        alert(`In Hawaiian: ${hawaiian}`);
+        alert(`Encrypted: ${cipherText}`);
       }
     });
   }

@@ -16,4 +16,10 @@ RCT_EXTERN_METHOD(
   callback:(RCTResponseSenderBlock *) callack
 )
 
+RCT_EXTERN_METHOD(
+  encrypt:(NSString *) plainText
+  secret:(NSString *) secret
+  callback:(RCTResponseSenderBlock *) callback
+)
+
 @end

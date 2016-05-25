@@ -23,6 +23,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3DDC7CC91CF596A00086A56C /* CryptoProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDC7CC81CF596A00086A56C /* CryptoProvider.m */; };
 		3DDC7CCC1CF598440086A56C /* CryptoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDC7CCB1CF598440086A56C /* CryptoProvider.swift */; };
+		3DDC7CCE1CF5A0A90086A56C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDC7CCD1CF5A0A90086A56C /* Security.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +130,7 @@
 		3DDC7CC81CF596A00086A56C /* CryptoProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoProvider.m; sourceTree = "<group>"; };
 		3DDC7CCA1CF597BE0086A56C /* EncryptNatively-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EncryptNatively-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DDC7CCB1CF598440086A56C /* CryptoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoProvider.swift; sourceTree = "<group>"; };
+		3DDC7CCD1CF5A0A90086A56C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DDC7CCE1CF5A0A90086A56C /* Security.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -295,6 +298,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3DDC7CCD1CF5A0A90086A56C /* Security.framework */,
 				13B07FAE1A68108700A75B9A /* EncryptNatively */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* EncryptNativelyTests */,
