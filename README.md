@@ -27,8 +27,8 @@ We are going to add an UI form to input text and secret.
 
           return CryptoProvider.decrypt(ciphertext, secret);
         })
-        .then(plainText => {
-          this.setState({ plainText });
+        .then(plaintext => {
+          this.setState({ plaintext });
         });
     }
     ```
@@ -56,7 +56,7 @@ We are going to add an UI form to input text and secret.
       <Text style={ styles.welcome }>
         Encrypt with AES128
       </Text>
-      <Text style={ styles.labels }>Input plain text</Text>
+      <Text style={ styles.labels }>Input plaintext</Text>
       <TextInput
         autoFocus={ true }
         onChangeText={ this.onInputStringChange.bind(this) }
@@ -75,11 +75,11 @@ We are going to add an UI form to input text and secret.
         style={ styles.inputs }
         value={ this.state.ciphertext }
       />
-      <Text style={ styles.labels }>Plain text</Text>
+      <Text style={ styles.labels }>Plaintext</Text>
       <TextInput
         editable={ false }
         style={ styles.inputs }
-        value={ this.state.plainText }
+        value={ this.state.plaintext }
       />
       ```
 

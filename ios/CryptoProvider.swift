@@ -23,7 +23,7 @@ class CryptoProvider: NSObject {
   }
 
   @objc func encrypt(
-    plainText: String,
+    plaintext: String,
     secret: String,
     resolve: RCTPromiseResolveBlock,
     reject: RCTPromiseRejectBlock
@@ -34,10 +34,10 @@ class CryptoProvider: NSObject {
     guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
       else { return reject("EINVAL", "\"secret\" is malformed", nil) }
 
-    guard let plainTextData = plainText.dataUsingEncoding(NSUTF8StringEncoding)
-      else { return reject("EINVAL", "\"plain text\" is malformed", nil) }
+    guard let plaintextData = plaintext.dataUsingEncoding(NSUTF8StringEncoding)
+      else { return reject("EINVAL", "\"plaintext\" is malformed", nil) }
 
-    guard let ciphertextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
+    guard let ciphertextData = NSMutableData(length: Int(plaintextData.length) + kCCBlockSizeAES128)
       else { return reject("ENOMEM", "cannot allocate memory for ciphertext", nil) }
 
     var numBytesEncrypted: size_t = 0
@@ -49,8 +49,8 @@ class CryptoProvider: NSObject {
       UnsafePointer<UInt8>(secretData.bytes),
       size_t(kCCKeySizeAES128),
       nil,
-      UnsafePointer<UInt8>(plainTextData.bytes),
-      size_t(plainTextData.length),
+      UnsafePointer<UInt8>(plaintextData.bytes),
+      size_t(plaintextData.length),
       UnsafeMutablePointer<UInt8>(ciphertextData.mutableBytes),
       size_t(ciphertextData.length),
       &numBytesEncrypted
