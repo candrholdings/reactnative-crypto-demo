@@ -13,7 +13,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
        ```
 
 2. Add a method definition to Objective-C class
-  1. We will define an `encrypt` method that consume a plain text and a secret, and then returns the result asynchronously
+  1. We will define an `encrypt` method that consume a plain text and a secret, encrypt it, and then returns the cipher text in BASE64 asynchronously
   2. Add the following to the file `CryptoProvider.m`
 
      ```objective-c
