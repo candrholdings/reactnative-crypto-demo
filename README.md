@@ -44,7 +44,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
         UnsafeMutablePointer<UInt8>(plainTextData.mutableBytes),
         size_t(plainTextData.length),
         &numBytesDecrypted
-      );
+      )
 
       guard UInt32(cryptStatus) == UInt32(kCCSuccess)
         else { return callback(["decrypt failed"]) }
