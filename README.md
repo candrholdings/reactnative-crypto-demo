@@ -48,7 +48,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
       guard let plainTextData = plainText.dataUsingEncoding(NSUTF8StringEncoding)
         else { return callback(["\"plain text\" is malformed"]) }
 
-      guard let cipherTextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
+      guard let ciphertextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
         else { return callback(["cannot allocate memory for ciphertext"]) }
 
       var numBytesEncrypted: size_t = 0
@@ -62,19 +62,19 @@ We are going to add another Swift method that encrypt a string with a secret, us
         nil,
         UnsafePointer<UInt8>(plainTextData.bytes),
         size_t(plainTextData.length),
-        UnsafeMutablePointer<UInt8>(cipherTextData.mutableBytes),
-        size_t(cipherTextData.length),
+        UnsafeMutablePointer<UInt8>(ciphertextData.mutableBytes),
+        size_t(ciphertextData.length),
         &numBytesEncrypted
       )
 
       guard UInt32(cryptStatus) == UInt32(kCCSuccess)
         else { return callback(["encrypt failed"]) }
 
-      cipherTextData.length = numBytesEncrypted
+      ciphertextData.length = numBytesEncrypted
 
       callback([
         NSNull(),
-        cipherTextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed)
+        ciphertextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed)
       ])
     }
     ```
@@ -86,11 +86,11 @@ We are going to add another Swift method that encrypt a string with a secret, us
 
     ```javascript
     componentDidMount() {
-      CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
+      CryptoProvider.encrypt('Hello', '1234567890123456', (err, ciphertext) => {
         if (err) {
           alert(`Failed to encrypt: ${err.message}`);
         } else {
-          alert(`Encrypted: ${cipherText}`);
+          alert(`Encrypted: ${ciphertext}`);
         }
       });
     }
