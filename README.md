@@ -78,7 +78,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
 
 4. Call the encryption method from JavaScript
   1. We will call our native `CryptoProvider` to encrypt `Hello` with secret `1234567890123456`
-    1. Note that the secret must be 16 characters long
+    1. Note that the secret must be 16 characters long, otherwise, it will be truncated or pad with random characters
   2. Modify our `componentDidMount` with the following code, in `index.ios.js`
 
      ```javascript
