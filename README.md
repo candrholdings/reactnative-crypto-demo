@@ -29,6 +29,8 @@ We are going to add an UI form to input text and secret.
      ```
 
   2. Adds a helper function to encrypt and decrypt the text, returns the result as state in React
+    1. We implement it in Promise fashion to simplify the code
+
      ```js
      _encrypt(inputString, secret) {
        encrypt(inputString, secret)
@@ -43,15 +45,16 @@ We are going to add an UI form to input text and secret.
      }
      ```
 
-  3. When the React component is getting loaded, do the encryption immediately
+  3. When the app is getting loaded, we will boot the encryption immediately
+
      ```js
      componentWillMount() {
        this._encrypt(this.state.inputStirng, this.state.encryptionKey);
      }
      ```
 
-  4. Adds some UI components
-    1. We will use `TextInput` component from React Native, we need to import it
+  4. Adds UI components
+    1. Before we can use `TextInput` component from React Native, we will need to import it from `react-native`
 
        ```js
        import {
@@ -111,7 +114,8 @@ We are going to add an UI form to input text and secret.
        }
        ```
 
-    3. Hooks up with JavaScript logics
+    3. Hooks up with JavaScript 
+      1. When either the input string or secret textbox is updated, we will rerun the encryption process 
 
        ```
        onSecretChange(secret) {
