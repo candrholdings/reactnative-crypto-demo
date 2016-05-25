@@ -1,21 +1,21 @@
-# Step 2: Add a new Swift method
+# Step 2: Adds a new Swift method
 
 We are going to add a method in Swift. The method will translate English into Hawaiian asynchronously.
 
-1. Add a method definition to the Objective-C class file
-  1. Open `CryptoProvider.m`, it holds all method definitions
-  2. Add the following code to the class
+1. Defines the translate method in Objective-C
+  1. We will define the `translateToHawaiian` method, it accept English string and translate to Hawaiian asynchronously
+  2. Add the following code to the file `CryptoProvider.m`
 
      ```objective-c
      RCT_EXTERN_METHOD(
-       TranslateToHawaiian:(NSString *) english
+       translateToHawaiian:(NSString *) english
        callback:(RCTResponseSenderBlock *) callback
      )
      ```
 
-2. Add a method implementation to the Swift class file
-  1. Open `CryptoProvider.swift`
-  2. Add the following code inside the class
+2. Implements the method in Swift
+  1. We will implement the `translateToHawaiian` method, currently, it only understand "Hello" in English and translate to "Aloha" in Hawaiian
+  2. Add the following code to the file `CryptoProvider.swift`
 
      ```swift
      @objc func translateToHawaiian(english: String, callback: RCTResponseSenderBlock) -> Void {
@@ -29,9 +29,9 @@ We are going to add a method in Swift. The method will translate English into Ha
      
   3. Currently, we only know how to translate "Hello" into "Aloha", otherwise, error will be thrown
 
-3. Consume the Swift method in JavaScript
-  1. Open `index.ios.js`
-  2. To import the Swift method, we add the following code to the header of the file
+3. Consumes the `translateToHawaiian` method in JavaScript
+  1. We will call the `translateToHawaiian` method when the UI is ready, and then output the result in an alert box
+  2. Imports the Swift method by adding the following code to `index.ios.js`
 
      ```javascript
      import {
@@ -39,7 +39,7 @@ We are going to add a method in Swift. The method will translate English into Ha
      } from 'NativeModules';
      ```
 
-  3. Then, we call the Swift method by adding the following code to the React component
+  3. Calls the Swift method asynchronously by adding the following code to the React component in `index.ios.js`
 
      ```javascript
      componentDidMount() {
