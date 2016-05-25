@@ -1,11 +1,11 @@
 # Step 4: Add a decryption method
 
-We are going to add another Swift method that encrypt a string with a secret.
+We are going to add another Swift method that decrypt a BASE64 binary with a secret.
 
-1. Add a method definition to Objective-C class
-  1. Open `CryptoProvider.m`
-  2. Add the following code to the class
-     ```c
+1. Defines the decryption method in Objective-C
+  1. We will define a `decrypt` method that consume a BASE64 text and a secret, decrypt it, and then returns the plain text asynchronously
+  2. Add the following code to the file `CryptoProvider.m`
+     ```objective-c
      RCT_EXTERN_METHOD(
        decrypt:(NSString *) base64CipherText
        secret:(NSString *) secret
@@ -13,9 +13,9 @@ We are going to add another Swift method that encrypt a string with a secret.
      )
      ```
 
-2. Add a decryption method to Swift class
-  1. Open `CryptoProvider.swift`
-  2. Add the following code inside the class
+2. Implements the decryption method in Swift
+  1. We will implement a `decrypt` method by using `CommonCrypto`
+  2. Add the following code to the file `CryptoProvider.swift`
      ```swift
      @objc func decrypt(base64CipherText: String, secret: String, callback: RCTResponseSenderBlock) -> Void {
        guard !secret.isEmpty
@@ -61,9 +61,10 @@ We are going to add another Swift method that encrypt a string with a secret.
      }
      ```
 
-3. Call the decryption method from JavaScript
-  1. Open `index.ios.js`
-  2. Modify `componentDidMount` with the following code
+3. Consumes the `decrypt` method from JavaScript
+  1. We will cdall our native `CryptoProvider` to encrypt `Hello` with secret `1234567890123456`, and then decrypt it immediately with the same secret
+  2. Modify our `componentDidMount` with the following code, in `index.ios.js`
+
      ```js
      componentDidMount() {
        CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
@@ -81,5 +82,6 @@ We are going to add another Swift method that encrypt a string with a secret.
        });
      }
      ```
-4. Verifying the result
+
+4. Verifies the result
   1. After running the code above, encrypting `Hello` then decrypting it should yield `Hello`
