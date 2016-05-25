@@ -2,23 +2,9 @@
 
 We are going to add an UI form to input text and secret.
 
-1. Uses `bluebird` package to convert call pattern from Node.js to [Promise](http://wiki.commonjs.org/wiki/Promises/A) interface
-  1. Promise interface is adopted by ES6 and widely used
-  2. Promise interface helps simplify asynchronous call pattern
-    1. Since React Native is using Node.js asynchronous call pattern, we will translate it into Promise by using `Promise.promisify` function from `bluebird`
-  3. At project root, install `bluebird` by typing `npm install bluebird --save`
-    1. `--save` persists the library in `package.json` so the library does not need to be checked into source control
-  4. Import `bluebird` and "promisify" our `encrypt` and `decrypt` functions by adding the following line in `index.ios.js`
-    ```js
-    import Promise from 'bluebird';
-
-    const
-      encrypt = Promise.promisify(CryptoProvider.encrypt, { context: CryptoProvider }),
-      decrypt = Promise.promisify(CryptoProvider.decrypt, { context: CryptoProvider });
-    ```
-
-2. Adds an UI form by modifying `index.ios.js`
+1. Adds an UI form by modifying `index.ios.js`
   1. Boots up the code by providing some initial values
+
     ```js
     constructor(props) {
       super(props);
@@ -35,15 +21,15 @@ We are going to add an UI form to input text and secret.
 
     ```js
     _encrypt(inputString, secret) {
-      encrypt(inputString, secret)
+      return CryptoProvider.encrypt(inputString, secret)
         .then(cipherText => {
           this.setState({ cipherText });
 
-          return decrypt(cipherText, secret);
+          return CryptoProvider.decrypt(cipherText, secret);
         })
         .then(plainText => {
           this.setState({ plainText });
-        })
+        });
     }
     ```
 
@@ -51,7 +37,7 @@ We are going to add an UI form to input text and secret.
 
     ```js
     componentWillMount() {
-      this._encrypt(this.state.inputStirng, this.state.encryptionKey);
+      this._encrypt(this.state.inputStirng, this.state.encryptionKey).done();
     }
     ```
 
@@ -116,17 +102,17 @@ We are going to add an UI form to input text and secret.
       }
       ```
 
-    3. Hooks up with JavaScript 
-      1. When either the input string or secret textbox is updated, we will rerun the encryption process 
+    3. Hooks up with JavaScript
+      1. When either the input string or secret textbox is updated, we will rerun the encryption process
 
       ```js
       onSecretChange(secret) {
         this.setState({ secret });
-        this._encrypt(this.state.inputText, secret);
+        this._encrypt(this.state.inputText, secret).done();
       }
 
       onInputStringChange(inputString) {
         this.setState({ inputString });
-        this._encrypt(inputString, this.state.secret);
+        this._encrypt(inputString, this.state.secret).done();
       }
       ```
