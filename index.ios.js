@@ -20,13 +20,12 @@ import {
 
 class EncryptNatively extends Component {
   componentDidMount() {
-    CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
-      if (err) {
-        alert(`Failed to encrypt: ${err.message}`);
-      } else {
+    CryptoProvider.encrypt('Hello', '1234567890123456')
+      .then(cipherText => {
         alert(`Encrypted: ${cipherText}`);
-      }
-    });
+      }, err => {
+        alert(`Failed to encrypt: ${err.message}`);
+      });
   }
 
   render() {

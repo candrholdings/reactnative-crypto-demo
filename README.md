@@ -5,9 +5,9 @@ We are going to add another Swift method that encrypt a string with a secret, us
 1. Prepares our project to use `CommonCrypto` from `Security.framework`
   1. Open project settings
     1. In the "Linked Frameworks and Libraries" section, find and add `Security.framework` reference
-  3. In `EncryptNatively-Bridging-Header.h`
+  2. In `EncryptNatively-Bridging-Header.h`
     1. Add the following code so that every classes in the project can consume the `CommonCrypto` library
-    
+
       ```objective-c
       #import <CommonCrypto/CommonCrypto.h>
       ```
@@ -20,7 +20,8 @@ We are going to add another Swift method that encrypt a string with a secret, us
     RCT_EXTERN_METHOD(
       encrypt:(NSString *) plainText
       secret:(NSString *) secret
-      callback:(RCTResponseSenderBlock *) callback
+      resolve:(RCTPromiseResolveBlock *) resolve
+      reject:(RCTPromiseRejectBlock *) reject
     )
     ```
 
@@ -35,7 +36,8 @@ We are going to add another Swift method that encrypt a string with a secret, us
     @objc func encrypt(
       plainText: String,
       secret: String,
-      callback: RCTResponseSenderBlock
+      resolve: RCTPromiseResolveBlock,
+      reject: RCTPromiseRejectBlock
     ) -> Void {
       guard !secret.isEmpty
         else { return callback(["must specify \"secret\""]) }
