@@ -22,4 +22,10 @@ RCT_EXTERN_METHOD(
   callback:(RCTResponseSenderBlock *) callback
 )
 
+RCT_EXTERN_METHOD(
+  decrypt:(NSString *) base64CipherText
+  secret:(NSString *) secret
+  callback:(RCTResponseSenderBlock *) callback
+)
+
 @end

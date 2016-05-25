@@ -24,7 +24,13 @@ class EncryptNatively extends Component {
       if (err) {
         alert(`Failed to encrypt: ${err.message}`);
       } else {
-        alert(`Encrypted: ${cipherText}`);
+        CryptoProvider.decrypt(cipherText, '1234567890123456', (err, plainText) => {
+          if (err) {
+            alert(`Failed to decrypt: ${err.message}`);
+          } else {
+            alert(`Plain text: ${plainText}`);
+          }
+        });
       }
     });
   }
