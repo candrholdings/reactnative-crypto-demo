@@ -62,7 +62,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
       guard let plainText = NSString(data: plainTextData, encoding: NSUTF8StringEncoding)
         else { return reject("EFAIL", "cannot decrypt non-text", nil) }
 
-      return resolve(plainText)
+      resolve(plainText)
     }
     ```
 
