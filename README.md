@@ -95,3 +95,5 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 
 4. Verifies the result
   1. After running the code above, encrypting `Hello` then decrypting it should yield `Hello`
+
+Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-5).
