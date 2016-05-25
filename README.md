@@ -1,4 +1,4 @@
-# Step 4: Add a decrypt method
+# Step 4: Adds a decrypt method
 
 We are going to add another Swift method that decrypt a BASE64 binary with a secret.
 
