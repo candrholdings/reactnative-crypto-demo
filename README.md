@@ -60,7 +60,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
          UnsafeMutablePointer<UInt8>(cipherTextData.mutableBytes),
          size_t(cipherTextData.length),
          &numBytesEncrypted
-       );
+       )
 
        guard UInt32(cryptStatus) == UInt32(kCCSuccess)
          else { return callback(["encrypt failed"]) }
