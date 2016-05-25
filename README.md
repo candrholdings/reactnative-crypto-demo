@@ -26,7 +26,9 @@ We are going to add another Swift method that encrypt a string with a secret, us
 
 3. Add an encryption method to the Swift class
   1. We will implement an `encrypt` method by using `CommonCrypto`
-  2. Add the following code to the file `CryptoProvider.swift`
+  2. Since cipher text is in binary, it is not supported by React Native, we will return it as BASE64 text
+    1. List of supported types can be found at http://facebook.github.io/react-native/docs/native-modules-ios.html#argument-types
+  3. Add the following code to the file `CryptoProvider.swift`
 
      ```swift
      @objc func encrypt(
