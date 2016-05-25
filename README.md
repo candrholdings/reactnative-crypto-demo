@@ -8,7 +8,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 
     ```objective-c
     RCT_EXTERN_METHOD(
-      decrypt:(NSString *) base64CipherText
+      decrypt:(NSString *) base64Ciphertext
       secret:(NSString *) secret
       resolve:(RCTPromiseResolveBlock) resolve
       reject:(RCTPromiseRejectBlock) reject
@@ -21,7 +21,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 
     ```swift
     @objc func decrypt(
-      base64CipherText: String,
+      base64Ciphertext: String,
       secret: String,
       resolve: RCTPromiseResolveBlock,
       reject: RCTPromiseRejectBlock
@@ -32,8 +32,8 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
       guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
         else { return reject("EINVAL", "\"secret\" is malformed", nil) }
 
-      guard let cipherTextData = NSData(base64EncodedString: base64CipherText, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-        else { return reject("EINVAL", "\"base64CipherText\" is malformed", nil) }
+      guard let ciphertextData = NSData(base64EncodedString: base64Ciphertext, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        else { return reject("EINVAL", "\"base64Ciphertext\" is malformed", nil) }
 
       guard let plainTextData = NSMutableData(length: Int(cipherTextData.length) + kCCBlockSizeAES128)
         else { return reject("ENOMEM", "cannot allocate memory for plain text", nil) }
@@ -47,8 +47,8 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
         UnsafePointer<UInt8>(secretData.bytes),
         size_t(kCCKeySizeAES128),
         nil,
-        UnsafePointer<UInt8>(cipherTextData.bytes),
-        size_t(cipherTextData.length),
+        UnsafePointer<UInt8>(ciphertextData.bytes),
+        size_t(ciphertextData.length),
         UnsafeMutablePointer<UInt8>(plainTextData.mutableBytes),
         size_t(plainTextData.length),
         &numBytesDecrypted
@@ -74,8 +74,8 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
     componentDidMount() {
       CryptoProvider.encrypt('Hello', '1234567890123456')
         .then(
-          cipherText => {
-            return CryptoProvider.decrypt(cipherText, '1234567890123456');
+          ciphertext => {
+            return CryptoProvider.decrypt(ciphertext, '1234567890123456');
           },
           err => {
             alert(`Failed to encrypt: ${err.message}`);
