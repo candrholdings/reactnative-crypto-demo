@@ -119,7 +119,7 @@ We are going to add an UI form to input text and secret.
     3. Hooks up with JavaScript 
       1. When either the input string or secret textbox is updated, we will rerun the encryption process 
 
-      ```
+      ```js
       onSecretChange(secret) {
         this.setState({ secret });
         this._encrypt(this.state.inputText, secret);
