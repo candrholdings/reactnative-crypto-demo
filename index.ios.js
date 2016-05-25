@@ -29,7 +29,7 @@ class EncryptNatively extends Component {
   }
 
   _encrypt(inputString, secret) {
-    CryptoProvider.encrypt(inputString, secret)
+    return CryptoProvider.encrypt(inputString, secret)
       .then(cipherText => {
         this.setState({ cipherText });
 
@@ -37,22 +37,21 @@ class EncryptNatively extends Component {
       })
       .then(plainText => {
         this.setState({ plainText });
-      })
-      .done();
+      });
   }
 
   componentWillMount() {
-    this._encrypt(this.state.inputString, this.state.secret);
+    this._encrypt(this.state.inputString, this.state.secret).done();
   }
 
   onSecretChange(secret) {
     this.setState({ secret });
-    this._encrypt(this.state.inputString, secret);
+    this._encrypt(this.state.inputString, secret).done();
   }
 
   onInputStringChange(inputString) {
     this.setState({ inputString });
-    this._encrypt(inputString, this.state.secret);
+    this._encrypt(inputString, this.state.secret).done();
   }
 
   render() {
