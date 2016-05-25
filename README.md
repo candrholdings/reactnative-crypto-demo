@@ -1,4 +1,4 @@
-# Step 3: Add an encrypt method
+# Step 3: Adds an encrypt method
 
 We are going to add another Swift method that encrypt a string with a secret, using AES128 in `CommonCrypto` from `Security.framework`.
 
