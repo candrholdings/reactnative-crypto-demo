@@ -13,12 +13,12 @@ We are going to add another Swift method that encrypt a string with a secret, us
       ```
 
 2. Defines the `encrypt` method in Objective-C
-  1. We will define an `encrypt` method that consume a plain text and a secret, encrypt it, and then returns the ciphertext in BASE64 asynchronously
+  1. We will define an `encrypt` method that consume a plaintext and a secret, encrypt it, and then returns the ciphertext in BASE64 asynchronously
   2. Add the following to the file `CryptoProvider.m`
 
     ```objective-c
     RCT_EXTERN_METHOD(
-      encrypt:(NSString *) plainText
+      encrypt:(NSString *) plaintext
       secret:(NSString *) secret
       resolve:(RCTPromiseResolveBlock) resolve
       reject:(RCTPromiseRejectBlock) reject
@@ -34,7 +34,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
 
     ```swift
     @objc func encrypt(
-      plainText: String,
+      plaintext: String,
       secret: String,
       resolve: RCTPromiseResolveBlock,
       reject: RCTPromiseRejectBlock
@@ -45,10 +45,10 @@ We are going to add another Swift method that encrypt a string with a secret, us
       guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
         else { return callback(["\"secret\" is malformed"]) }
 
-      guard let plainTextData = plainText.dataUsingEncoding(NSUTF8StringEncoding)
-        else { return callback(["\"plain text\" is malformed"]) }
+      guard let plaintextData = plainText.dataUsingEncoding(NSUTF8StringEncoding)
+        else { return callback(["\"plaintext\" is malformed"]) }
 
-      guard let ciphertextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
+      guard let ciphertextData = NSMutableData(length: Int(plaintextData.length) + kCCBlockSizeAES128)
         else { return callback(["cannot allocate memory for ciphertext"]) }
 
       var numBytesEncrypted: size_t = 0
@@ -60,8 +60,8 @@ We are going to add another Swift method that encrypt a string with a secret, us
         UnsafePointer<UInt8>(secretData.bytes),
         size_t(kCCKeySizeAES128),
         nil,
-        UnsafePointer<UInt8>(plainTextData.bytes),
-        size_t(plainTextData.length),
+        UnsafePointer<UInt8>(plaintextData.bytes),
+        size_t(plaintextData.length),
         UnsafeMutablePointer<UInt8>(ciphertextData.mutableBytes),
         size_t(ciphertextData.length),
         &numBytesEncrypted
