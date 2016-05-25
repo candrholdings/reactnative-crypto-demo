@@ -24,7 +24,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
      )
      ```
 
-3. Add an encryption method to Swift class
+3. Add an encryption method to the Swift class
   1. We will implement an `encrypt` method by using `CommonCrypto`
   2. Add the following code to the file `CryptoProvider.swift`
 
