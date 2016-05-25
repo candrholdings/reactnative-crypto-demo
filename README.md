@@ -22,10 +22,10 @@ We are going to add an UI form to input text and secret.
     ```js
     _encrypt(inputString, secret) {
       return CryptoProvider.encrypt(inputString, secret)
-        .then(cipherText => {
-          this.setState({ cipherText });
+        .then(ciphertext => {
+          this.setState({ ciphertext });
 
-          return CryptoProvider.decrypt(cipherText, secret);
+          return CryptoProvider.decrypt(ciphertext, secret);
         })
         .then(plainText => {
           this.setState({ plainText });
@@ -69,11 +69,11 @@ We are going to add an UI form to input text and secret.
         style={ styles.inputs }
         value={ this.state.secret }
       />
-      <Text style={ styles.labels }>Cipher text in BASE64</Text>
+      <Text style={ styles.labels }>Ciphertext in BASE64</Text>
       <TextInput
         editable={ false }
         style={ styles.inputs }
-        value={ this.state.cipherText }
+        value={ this.state.ciphertext }
       />
       <Text style={ styles.labels }>Plain text</Text>
       <TextInput
