@@ -1,10 +1,12 @@
-# Step 5: Add an UI form
+# Step 5: Adds an UI form
 
 We are going to add an UI form to input text and secret.
 
-1. Use `bluebird` package
-  1. At project root, type `npm install bluebird --save`
-  2. Open `index.ios.js`, add the following to the file
+1. Uses `bluebird` package to convert call pattern
+  1. Promise interface helps simplify asynchronous call pattern
+    1. Since React Native is using Node.js asynchronous call pattern, we will translate it into Promise by using `Promise.promisify` function from `bluebird`
+  2. At project root, type `npm install bluebird --save`
+  3. Import `bluebird` and promisify our `encrypt` and `decrypt` function by adding the following line in `index.ios.js`
      ```js
      import Promise from 'bluebird';
 
@@ -13,22 +15,20 @@ We are going to add an UI form to input text and secret.
        decrypt = Promise.promisify(CryptoProvider.decrypt, { context: CryptoProvider });
      ```
 
-2. Add an UI form
-  1. Set initial state
+2. Adds an UI form by modifying `index.ios.js`
+  1. Boots up the code by providing some initial values
      ```js
      constructor(props) {
        super(props);
 
        this.state = {
          inputString: 'Hello',
-         secret: '1234567890123456',
-         cipherText: '',
-         plainText: ''
+         secret: '1234567890123456'
        };
      }
      ```
 
-  2. Add a function to perform encryption and decryption
+  2. Adds a helper function to encrypt and decrypt the text, returns the result as state in React
      ```js
      _encrypt(inputString, secret) {
        encrypt(inputString, secret)
@@ -43,23 +43,25 @@ We are going to add an UI form to input text and secret.
      }
      ```
 
-  3. Run the encryption function on start
+  3. When the React component is getting loaded, do the encryption immediately
      ```js
      componentWillMount() {
        this._encrypt(this.state.inputStirng, this.state.encryptionKey);
      }
      ```
 
-  4. Add a UI form
-    1. Import `TextInput` component
-       ```
+  4. Adds some UI components
+    1. We will use `TextInput` component from React Native, we need to import it
+
+       ```js
        import {
          TextInput
        } from 'react-native';
        ```
 
-    2. Add UI components
-       ```
+    2. Adds UI components to the page
+
+       ```js
        <Text style={ styles.welcome }>
          Encrypt with AES128
        </Text>
@@ -90,7 +92,8 @@ We are going to add an UI form to input text and secret.
        />
        ```
 
-    2. Add styles
+    2. Styles the new UI components
+
        ```js
        labels: {
          textAlign: 'center',
@@ -108,7 +111,8 @@ We are going to add an UI form to input text and secret.
        }
        ```
 
-    3. Hook up with JavaScript logics
+    3. Hooks up with JavaScript logics
+
        ```
        onSecretChange(secret) {
          this.setState({ secret });
