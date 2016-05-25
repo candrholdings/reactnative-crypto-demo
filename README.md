@@ -5,6 +5,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 1. Defines the `decrypt` method in Objective-C
   1. We will define a `decrypt` method that consume a BASE64 text and a secret, decrypt it, and then returns the plain text asynchronously
   2. Add the following code to the file `CryptoProvider.m`
+
     ```objective-c
     RCT_EXTERN_METHOD(
       decrypt:(NSString *) base64CipherText
@@ -16,6 +17,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 2. Implements the `decrypt` method in Swift
   1. We will implement a `decrypt` method by using `CommonCrypto`
   2. Add the following code to the file `CryptoProvider.swift`
+
     ```swift
     @objc func decrypt(base64CipherText: String, secret: String, callback: RCTResponseSenderBlock) -> Void {
       guard !secret.isEmpty
