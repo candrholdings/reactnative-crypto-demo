@@ -68,18 +68,18 @@ class EncryptNatively extends Component {
     const { state } = this;
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
+      <View style={ styles.container }>
+        <Text style={ styles.welcome }>
           Welcome to React Native!
         </Text>
-        <Text style={styles.instructions}>
+        <Text style={ styles.instructions }>
           To get started, edit index.ios.js
         </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
+        <Text style={ styles.instructions }>
+          Press Cmd+R to reload,{ '\n' }
           Cmd+D or shake for dev menu
         </Text>
-        <Text style={styles.welcome}>
+        <Text style={ styles.welcome }>
           Encrypt with AES128
         </Text>
         <Text style={ styles.labels }>Encryption key (16 characters)</Text>
