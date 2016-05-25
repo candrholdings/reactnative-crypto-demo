@@ -12,7 +12,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
       #import <CommonCrypto/CommonCrypto.h>
       ```
 
-2. Defines the encrypt method in Objective-C
+2. Defines the `encrypt` method in Objective-C
   1. We will define an `encrypt` method that consume a plain text and a secret, encrypt it, and then returns the cipher text in BASE64 asynchronously
   2. Add the following to the file `CryptoProvider.m`
 
@@ -24,7 +24,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
     )
     ```
 
-3. Implements the encrypt method in Swift
+3. Implements the `encrypt` method in Swift
   1. We will implement an `encrypt` method by using `CommonCrypto`
   2. Since cipher text is in binary, it is not supported by React Native, we will return it as BASE64 text
     1. List of supported types can be found at http://facebook.github.io/react-native/docs/native-modules-ios.html#argument-types
