@@ -2,7 +2,7 @@
 
 We are going to add another Swift method that encrypt a string with a secret, using `CommonCrypto` from `Security.framework`.
 
-1. Prepare our project to use `CommonCrypto` from `Security.framework`
+1. Prepares our project to use `CommonCrypto` from `Security.framework`
   1. Open project settings
     1. In the "Linked Frameworks and Libraries" section, find and add `Security.framework` reference
   3. In `EncryptNatively-Bridging-Header.h`
@@ -12,7 +12,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
        #import <CommonCrypto/CommonCrypto.h>
        ```
 
-2. Add a method definition to Objective-C class
+2. Defines the encrypt method in Objective-C
   1. We will define an `encrypt` method that consume a plain text and a secret, encrypt it, and then returns the cipher text in BASE64 asynchronously
   2. Add the following to the file `CryptoProvider.m`
 
@@ -24,7 +24,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
      )
      ```
 
-3. Add an encryption method to the Swift class
+3. Implements the encrypt method in Swift
   1. We will implement an `encrypt` method by using `CommonCrypto`
   2. Since cipher text is in binary, it is not supported by React Native, we will return it as BASE64 text
     1. List of supported types can be found at http://facebook.github.io/react-native/docs/native-modules-ios.html#argument-types
@@ -76,7 +76,7 @@ We are going to add another Swift method that encrypt a string with a secret, us
      }
      ```
 
-4. Call the encryption method from JavaScript
+4. Calls the `encrypt` method from JavaScript
   1. We will call our native `CryptoProvider` to encrypt `Hello` with secret `1234567890123456`
     1. Note that the secret must be 16 characters long, otherwise, it will be truncated or pad with random characters
   2. Modify our `componentDidMount` with the following code, in `index.ios.js`
@@ -93,5 +93,5 @@ We are going to add another Swift method that encrypt a string with a secret, us
      }
      ```
 
-5. Verify the result
+5. Verifies the result
   1. After running the code above, encrypting `Hello` with secret `1234567890123456` should yield `+szA6t7l9kO128ylajHQ==` in BASE64
