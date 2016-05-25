@@ -18,12 +18,6 @@ import {
   CryptoProvider
 } from 'NativeModules';
 
-import Promise from 'bluebird';
-
-const
-  encrypt = Promise.promisify(CryptoProvider.encrypt, { context: CryptoProvider }),
-  decrypt = Promise.promisify(CryptoProvider.decrypt, { context: CryptoProvider });
-
 class EncryptNatively extends Component {
   constructor(props) {
     super(props);
@@ -35,15 +29,16 @@ class EncryptNatively extends Component {
   }
 
   _encrypt(inputString, secret) {
-    encrypt(inputString, secret)
+    CryptoProvider.encrypt(inputString, secret)
       .then(cipherText => {
         this.setState({ cipherText });
 
-        return decrypt(cipherText, secret);
+        return CryptoProvider.decrypt(cipherText, secret);
       })
       .then(plainText => {
         this.setState({ plainText });
       })
+      .done();
   }
 
   componentWillMount() {
