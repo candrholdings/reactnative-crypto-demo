@@ -13,15 +13,15 @@
 
 RCT_EXTERN_METHOD(
   translateToHawaiian:(NSString *) english
-  resolve:(RCTPromiseResolveBlock *) resolve
-  reject:(RCTPromiseRejectBlock *) reject
+  resolve:(RCTPromiseResolveBlock) resolve
+  reject:(RCTPromiseRejectBlock) reject
 )
 
 RCT_EXTERN_METHOD(
   encrypt:(NSString *) plainText
   secret:(NSString *) secret
-  resolve:(RCTPromiseResolveBlock *) resolve
-  reject:(RCTPromiseRejectBlock *) reject
+  resolve:(RCTPromiseResolveBlock) resolve
+  reject:(RCTPromiseRejectBlock) reject
 )
 
 @end

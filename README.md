@@ -20,8 +20,8 @@ We are going to add another Swift method that encrypt a string with a secret, us
     RCT_EXTERN_METHOD(
       encrypt:(NSString *) plainText
       secret:(NSString *) secret
-      resolve:(RCTPromiseResolveBlock *) resolve
-      reject:(RCTPromiseRejectBlock *) reject
+      resolve:(RCTPromiseResolveBlock) resolve
+      reject:(RCTPromiseRejectBlock) reject
     )
     ```
 
