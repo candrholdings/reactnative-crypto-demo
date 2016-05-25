@@ -1,11 +1,22 @@
 # Step 3: Add an encryption method
 
-We are going to add another Swift method that encrypt a string with a secret.
+We are going to add another Swift method that encrypt a string with a secret, using native framework called CommonCrypto.
 
-1. Add a method definition to Objective-C class
-  1. Open `CryptoProvider.m`
-  2. Add the following code to the class
-     ```c
+1. Prepare our project to use `CommonCrypto` from `Security.framework`
+  1. Open project settings
+    1. In the "Linked Frameworks and Libraries" section, find and add `Security.framework` reference
+  3. In `EncryptNatively-Bridging-Header.h`
+    1. Add the following code so that every classes in the project can consume the `CommonCrypto` library
+    
+       ```objective-c
+       #import <CommonCrypto/CommonCrypto.h>
+       ```
+
+2. Add a method definition to Objective-C class
+  1. We will define an `encrypt` method that consume a plain text and a secret, and then returns the result asynchronously
+  2. Add the following to the file `CryptoProvider.m`
+
+     ```objective-c
      RCT_EXTERN_METHOD(
        encrypt:(NSString *) plainText
        secret:(NSString *) secret
@@ -13,9 +24,10 @@ We are going to add another Swift method that encrypt a string with a secret.
      )
      ```
 
-2. Add an encryption method to Swift class
-  1. Open `CryptoProvider.swift`
-  2. Add the following code inside the class
+3. Add an encryption method to Swift class
+  1. We will implement an `encrypt` method by using `CommonCrypto`
+  2. Add the following code to the file `CryptoProvider.swift`
+
      ```swift
      @objc func encrypt(
        plainText: String,
@@ -62,9 +74,11 @@ We are going to add another Swift method that encrypt a string with a secret.
      }
      ```
 
-3. Call the encryption method from JavaScript
-  1. Open `index.ios.js`
-  2. Modify `componentDidMount` with the following code
+4. Call the encryption method from JavaScript
+  1. We will call our native `CryptoProvider` to encrypt `Hello` with secret `1234567890123456`
+    1. Note that the secret must be 16 characters long
+  2. Modify our `componentDidMount` with the following code, in `index.ios.js`
+
      ```javascript
      componentDidMount() {
        CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
@@ -76,5 +90,6 @@ We are going to add another Swift method that encrypt a string with a secret.
        });
      }
      ```
-4. Verifying the result
+
+5. Verifying the result
   1. After running the code above, encrypting `Hello` with secret `1234567890123456` should yield `+szA6t7l9kO128ylajHQ==` in BASE64
