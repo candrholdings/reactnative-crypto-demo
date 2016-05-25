@@ -62,7 +62,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
      ```
 
 3. Consumes the `decrypt` method from JavaScript
-  1. We will cdall our native `CryptoProvider` to encrypt `Hello` with secret `1234567890123456`, and then decrypt it immediately with the same secret
+  1. We will call our native `CryptoProvider` to encrypt `Hello` with secret `1234567890123456`, and then decrypt it immediately with the same secret
   2. Modify our `componentDidMount` with the following code, in `index.ios.js`
 
      ```js
