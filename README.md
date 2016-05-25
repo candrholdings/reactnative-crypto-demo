@@ -1,6 +1,6 @@
 # Step 3: Add an encryption method
 
-We are going to add another Swift method that encrypt a string with a secret, using native framework called CommonCrypto.
+We are going to add another Swift method that encrypt a string with a secret, using `CommonCrypto` from `Security.framework`.
 
 1. Prepare our project to use `CommonCrypto` from `Security.framework`
   1. Open project settings
