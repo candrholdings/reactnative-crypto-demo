@@ -82,14 +82,31 @@ class EncryptNatively extends Component {
         <Text style={ styles.welcome }>
           Encrypt with AES128
         </Text>
-        <Text style={ styles.labels }>Encryption key (16 characters)</Text>
-        <TextInput onChangeText={ this.onEncryptionKeyChange.bind(this) } style={ styles.inputs } value={ state.encryptionKey } />
         <Text style={ styles.labels }>Input plain text</Text>
-        <TextInput onChangeText={ this.onInputTextChange.bind(this) } style={ styles.inputs } value={ state.inputText } />
+        <TextInput
+          autoFocus={ true }
+          onChangeText={ this.onInputTextChange.bind(this) }
+          style={ styles.inputs }
+          value={ state.inputText }
+        />
+        <Text style={ styles.labels }>Encryption key (16 characters)</Text>
+        <TextInput
+          onChangeText={ this.onEncryptionKeyChange.bind(this) }
+          style={ styles.inputs }
+          value={ state.encryptionKey }
+        />
         <Text style={ styles.labels }>Cipher text in BASE64</Text>
-        <TextInput style={ styles.inputs } value={ state.cipherText } />
+        <TextInput
+          editable={ false }
+          style={ styles.inputs }
+          value={ state.cipherText }
+        />
         <Text style={ styles.labels }>Decrypted cipher text</Text>
-        <TextInput style={ styles.inputs } value={ state.decipherText } />
+        <TextInput
+          editable={ false }
+          style={ styles.inputs }
+          value={ state.decipherText }
+        />
       </View>
     );
   }
