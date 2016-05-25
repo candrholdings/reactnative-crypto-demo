@@ -21,8 +21,8 @@ import {
 class EncryptNatively extends Component {
   componentDidMount() {
     CryptoProvider.encrypt('Hello', '1234567890123456')
-      .then(cipherText => {
-        alert(`Encrypted: ${cipherText}`);
+      .then(ciphertext => {
+        alert(`Encrypted: ${ciphertext}`);
       }, err => {
         alert(`Failed to encrypt: ${err.message}`);
       });

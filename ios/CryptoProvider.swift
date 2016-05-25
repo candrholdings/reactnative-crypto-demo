@@ -37,8 +37,8 @@ class CryptoProvider: NSObject {
     guard let plainTextData = plainText.dataUsingEncoding(NSUTF8StringEncoding)
       else { return reject("EINVAL", "\"plain text\" is malformed", nil) }
 
-    guard let cipherTextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
-      else { return reject("ENOMEM", "cannot allocate memory for cipher text", nil) }
+    guard let ciphertextData = NSMutableData(length: Int(plainTextData.length) + kCCBlockSizeAES128)
+      else { return reject("ENOMEM", "cannot allocate memory for ciphertext", nil) }
 
     var numBytesEncrypted: size_t = 0
 
@@ -51,16 +51,16 @@ class CryptoProvider: NSObject {
       nil,
       UnsafePointer<UInt8>(plainTextData.bytes),
       size_t(plainTextData.length),
-      UnsafeMutablePointer<UInt8>(cipherTextData.mutableBytes),
-      size_t(cipherTextData.length),
+      UnsafeMutablePointer<UInt8>(ciphertextData.mutableBytes),
+      size_t(ciphertextData.length),
       &numBytesEncrypted
     )
 
     guard UInt32(cryptStatus) == UInt32(kCCSuccess)
       else { return reject("EFAIL", "encrypt failed", nil) }
 
-    cipherTextData.length = numBytesEncrypted
+    ciphertextData.length = numBytesEncrypted
 
-    resolve(cipherTextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed))
+    resolve(ciphertextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed))
   }
 }
