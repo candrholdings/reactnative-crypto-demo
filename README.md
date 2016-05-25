@@ -1,85 +1,122 @@
-# Step 4: Add a decryption method
+# Step 5: Add an UI form
 
-We are going to add another Swift method that encrypt a string with a secret.
+We are going to add an UI form to input text and secret.
 
-1. Add a method definition to Objective-C class
-  1. Open `CryptoProvider.m`
-  2. Add the following code to the class
-     ```c
-     RCT_EXTERN_METHOD(
-       decrypt:(NSString *) base64CipherText
-       secret:(NSString *) secret
-       callback:(RCTResponseSenderBlock *) callback
-     )
-     ```
-
-2. Add a decryption method to Swift class
-  1. Open `CryptoProvider.swift`
-  2. Add the following code inside the class
-     ```swift
-     @objc func decrypt(base64CipherText: String, secret: String, callback: RCTResponseSenderBlock) -> Void {
-       guard !secret.isEmpty
-         else { return callback(["must specify \"secret\""]) }
-
-       guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
-         else { return callback(["\"secret\" is malformed"]) }
-
-       guard let cipherTextData = NSData(base64EncodedString: base64CipherText, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-         else { return callback(["\"base64CipherText\" is malformed"]) }
-
-       guard let plainTextData = NSMutableData(length: Int(cipherTextData.length) + kCCBlockSizeAES128)
-         else { return callback(["cannot allocate memory for plain text"]) }
-
-       var numBytesDecrypted: size_t = 0
-
-       let cryptStatus = CCCrypt(
-         UInt32(kCCDecrypt),
-         UInt32(kCCAlgorithmAES128),
-         UInt32(kCCOptionPKCS7Padding),
-         UnsafePointer<UInt8>(secretData.bytes),
-         size_t(kCCKeySizeAES128),
-         nil,
-         UnsafePointer<UInt8>(cipherTextData.bytes),
-         size_t(cipherTextData.length),
-         UnsafeMutablePointer<UInt8>(plainTextData.mutableBytes),
-         size_t(plainTextData.length),
-         &numBytesDecrypted
-       );
-
-       guard UInt32(cryptStatus) == UInt32(kCCSuccess)
-         else { return callback(["decrypt failed"]) }
-
-       plainTextData.length = numBytesDecrypted
-
-       guard let plainText = NSString(data: plainTextData, encoding: NSUTF8StringEncoding)
-         else { return callback(["cannot decrypt non-text"]) }
-
-       return callback([
-         NSNull(),
-         plainText
-       ])
-     }
-     ```
-
-3. Call the decryption method from JavaScript
-  1. Open `index.ios.js`
-  2. Modify `componentDidMount` with the following code
+1. Use `bluebird` package
+  1. At project root, type `npm install bluebird --save`
+  2. Open `index.ios.js`, add the following to the file
      ```js
-     componentDidMount() {
-       CryptoProvider.encrypt('Hello', '1234567890123456', (err, cipherText) => {
-         if (err) {
-           alert(`Failed to encrypt: ${err.message}`);
-         } else {
-           CryptoProvider.decrypt(cipherText, '1234567890123456', (err, plainText) => {
-             if (err) {
-               alert(`Failed to decrypt: ${err.message}`);
-             } else {
-               alert(`Plain text: ${plainText}`);
-             }
-           });
-         }
-       });
+     import Promise from 'bluebird';
+
+     const
+       encrypt = Promise.promisify(CryptoProvider.encrypt, { context: CryptoProvider }),
+       decrypt = Promise.promisify(CryptoProvider.decrypt, { context: CryptoProvider });
+     ```
+
+2. Add an UI form
+  1. Set initial state
+     ```js
+     constructor(props) {
+       super(props);
+
+       this.state = {
+         inputString: 'Hello',
+         secret: '1234567890123456',
+         cipherText: '',
+         plainText: ''
+       };
      }
      ```
-4. Verifying the result
-  1. After running the code above, encrypting `Hello` then decrypting it should yield `Hello`
+
+  2. Add a function to perform encryption and decryption
+     ```js
+     _encrypt(inputString, secret) {
+       encrypt(inputString, secret)
+         .then(cipherText => {
+           this.setState({ cipherText });
+
+           return decrypt(cipherText, secret);
+         })
+         .then(plainText => {
+           this.setState({ plainText });
+         })
+     }
+     ```
+
+  3. Run the encryption function on start
+     ```js
+     componentWillMount() {
+       this._encrypt(this.state.inputStirng, this.state.encryptionKey);
+     }
+     ```
+
+  4. Add a UI form
+    1. Import `TextInput` component
+       ```
+       import {
+         TextInput
+       } from 'react-native';
+       ```
+
+    2. Add UI components
+       ```
+       <Text style={ styles.welcome }>
+         Encrypt with AES128
+       </Text>
+       <Text style={ styles.labels }>Input plain text</Text>
+       <TextInput
+         autoFocus={ true }
+         onChangeText={ this.onInputStringChange.bind(this) }
+         style={ styles.inputs }
+         value={ this.state.inputString }
+       />
+       <Text style={ styles.labels }>Encryption key (16 characters)</Text>
+       <TextInput
+         onChangeText={ this.onSecretChange.bind(this) }
+         style={ styles.inputs }
+         value={ this.state.secret }
+       />
+       <Text style={ styles.labels }>Cipher text in BASE64</Text>
+       <TextInput
+         editable={ false }
+         style={ styles.inputs }
+         value={ this.state.cipherText }
+       />
+       <Text style={ styles.labels }>Plain text</Text>
+       <TextInput
+         editable={ false }
+         style={ styles.inputs }
+         value={ this.state.plainText }
+       />
+       ```
+
+    2. Add styles
+       ```js
+       labels: {
+         textAlign: 'center',
+         color: '#333',
+         marginBottom: 5,
+       },
+       inputs: {
+         backgroundColor: '#FFF',
+         borderColor: '#333',
+         borderRadius: 5,
+         borderWidth: 1,
+         height: 40,
+         textAlign: 'center',
+         marginBottom: 5
+       }
+       ```
+
+    3. Hook up with JavaScript logics
+       ```
+       onSecretChange(secret) {
+         this.setState({ secret });
+         this._encrypt(this.state.inputText, secret);
+       }
+
+       onInputStringChange(inputString) {
+         this.setState({ inputString });
+         this._encrypt(inputString, this.state.secret);
+       }
+       ```
