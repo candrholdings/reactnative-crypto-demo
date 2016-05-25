@@ -106,6 +106,6 @@ class CryptoProvider: NSObject {
     guard let plainText = NSString(data: plainTextData, encoding: NSUTF8StringEncoding)
       else { return reject("EFAIL", "cannot decrypt non-text", nil) }
 
-    return resolve(plainText)
+    resolve(plainText)
   }
 }
