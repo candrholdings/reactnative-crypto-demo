@@ -37,7 +37,7 @@ We are going to add an UI form to input text and secret.
 
     ```js
     componentWillMount() {
-      this._encrypt(this.state.inputStirng, this.state.encryptionKey).done();
+      this._encrypt(this.state.inputString, this.state.secret).done();
     }
     ```
 
