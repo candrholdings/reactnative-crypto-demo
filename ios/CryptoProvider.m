@@ -24,4 +24,11 @@ RCT_EXTERN_METHOD(
   reject:(RCTPromiseRejectBlock) reject
 )
 
+RCT_EXTERN_METHOD(
+  decrypt:(NSString *) base64Ciphertext
+  secret:(NSString *) secret
+  resolve:(RCTPromiseResolveBlock) resolve
+  reject:(RCTPromiseRejectBlock) reject
+)
+
 @end

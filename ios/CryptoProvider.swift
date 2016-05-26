@@ -63,4 +63,49 @@ class CryptoProvider: NSObject {
 
     resolve(ciphertextData.base64EncodedStringWithOptions(.EncodingEndLineWithLineFeed))
   }
+
+  @objc func decrypt(
+    base64Ciphertext: String,
+    secret: String,
+    resolve: RCTPromiseResolveBlock,
+    reject: RCTPromiseRejectBlock
+  ) -> Void {
+    guard !secret.isEmpty
+      else { return reject("EINVAL", "must specify \"secret\"", nil) }
+
+    guard let secretData = secret.dataUsingEncoding(NSUTF8StringEncoding)
+      else { return reject("EINVAL", "\"secret\" is malformed", nil) }
+
+    guard let ciphertextData = NSData(base64EncodedString: base64Ciphertext, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+      else { return reject("EINVAL", "\"base64Ciphertext\" is malformed", nil) }
+
+    guard let plaintextData = NSMutableData(length: Int(ciphertextData.length) + kCCBlockSizeAES128)
+      else { return reject("ENOMEM", "cannot allocate memory for plaintext", nil) }
+
+    var numBytesDecrypted: size_t = 0
+
+    let cryptStatus = CCCrypt(
+      UInt32(kCCDecrypt),
+      UInt32(kCCAlgorithmAES128),
+      UInt32(kCCOptionPKCS7Padding),
+      UnsafePointer<UInt8>(secretData.bytes),
+      size_t(kCCKeySizeAES128),
+      nil,
+      UnsafePointer<UInt8>(ciphertextData.bytes),
+      size_t(ciphertextData.length),
+      UnsafeMutablePointer<UInt8>(plaintextData.mutableBytes),
+      size_t(plaintextData.length),
+      &numBytesDecrypted
+    )
+
+    guard UInt32(cryptStatus) == UInt32(kCCSuccess)
+      else { return reject("EFAIL", "decrypt failed", nil) }
+
+    plaintextData.length = numBytesDecrypted
+
+    guard let plaintext = NSString(data: plaintextData, encoding: NSUTF8StringEncoding)
+      else { return reject("EFAIL", "cannot decrypt non-text", nil) }
+
+    resolve(plaintext)
+  }
 }

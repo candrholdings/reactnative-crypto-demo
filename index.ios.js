@@ -37,10 +37,14 @@ class EncryptNatively extends Component {
 
   _encrypt(inputString, secret) {
     CryptoProvider.encrypt(inputString, secret)
-      .then(
-        ciphertext => this.setState({ ciphertext }),
-        err => alert(`Failed to encrypt due to "${err.message}"`)
-      )
+      .then(ciphertext => {
+        this.setState({ ciphertext });
+        return CryptoProvider.decrypt(ciphertext, secret);
+      })
+      .then(plaintext => {
+        this.setState({ plaintext });
+      })
+      .catch(err => alert(`Failed to encrypt/decrypt due to "${err.message}"`))
       .done();
   }
 
@@ -60,7 +64,7 @@ class EncryptNatively extends Component {
 
   onSecretChange(secret) {
     this.setState({ secret });
-    this._encrypt(this.state.inputString, secret);
+    this._encrypt(this.state.inputString, secret)
   }
 
   render() {
