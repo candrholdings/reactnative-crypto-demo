@@ -70,7 +70,7 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
     }
     ```
 
-3. Consumes the `decrypt` method from JavaScript
+3. Consumes the `decrypt` method from JavaScript, in `index.ios.js`
   1. Immediately after encrypting the input string in last step, we will decrypt it and show the plaintext
   2. Modifies the `_encrypt` function to decrypt the text after encryption succeeded
 
