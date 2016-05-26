@@ -62,9 +62,9 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
 
     ```javascript
     labels: {
-      textAlign: 'center',
       color: '#333',
-      marginBottom: 5
+      marginBottom: 5,
+      textAlign: 'center'
     },
     inputs: {
       backgroundColor: '#FFF',
@@ -72,8 +72,8 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
       borderRadius: 5,
       borderWidth: 1,
       height: 40,
-      textAlign: 'center',
-      marginBottom: 5
+      marginBottom: 5,
+      textAlign: 'center'
     }
     ```
 
