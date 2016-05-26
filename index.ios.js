@@ -13,9 +13,58 @@ import {
   View
 } from 'react-native';
 
+import {
+  TextInput
+} from 'react-native';
+
 class EncryptNatively extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inputString: 'Hello',
+      secret: '1234567890123456'
+    };
+  }
+
+  onSecretChange(secret) {
+    this.setState({ secret });
+  }
+
+  onInputStringChange(inputString) {
+    this.setState({ inputString });
+  }
+
   render() {
     return (
+      <Text style={ styles.welcome }>
+        Encrypt with AES128
+      </Text>
+      <Text style={ styles.labels }>Input plaintext</Text>
+      <TextInput
+        autoFocus={ true }
+        onChangeText={ this.onInputStringChange.bind(this) }
+        style={ styles.inputs }
+        value={ this.state.inputString }
+      />
+      <Text style={ styles.labels }>Encryption key (16 characters)</Text>
+      <TextInput
+        onChangeText={ this.onSecretChange.bind(this) }
+        style={ styles.inputs }
+        value={ this.state.secret }
+      />
+      <Text style={ styles.labels }>Ciphertext in BASE64</Text>
+      <TextInput
+        editable={ false }
+        style={ styles.inputs }
+        value={ this.state.ciphertext }
+      />
+      <Text style={ styles.labels }>Plaintext</Text>
+      <TextInput
+        editable={ false }
+        style={ styles.inputs }
+        value={ this.state.plaintext }
+      />
       <View style={ styles.container }>
         <Text style={ styles.welcome }>
           Welcome to React Native!
@@ -49,6 +98,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333',
     marginBottom: 5,
+  },
+  labels: {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: 5
+  },
+  inputs: {
+    backgroundColor: '#FFF',
+    borderColor: '#333',
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 40,
+    textAlign: 'center',
+    marginBottom: 5
   }
 });
 

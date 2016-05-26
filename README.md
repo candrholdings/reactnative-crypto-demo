@@ -7,7 +7,9 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
 * Input string
 * Secret
 * Ciphertext
+  * Read-only
 * Plaintext (decrypted from ciphertext)
+  * Read-only
 
 ## Steps to achieve
 
@@ -21,8 +23,9 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     ```
 
   2. Adds a title and textboxes to the app
-    1. Hooks up the textboxes with values from `this.state`
-    2. Styles the UI components
+    1. Textboxes will display values from `this.state`
+    2. Change events from input string and secret textboxes will go back to `this.state`
+    3. Styles the UI components
 
       ```js
       <Text style={ styles.welcome }>
@@ -55,7 +58,7 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
       />
       ```
 
-  3. Adds styles classes
+  3. Adds styles to the stylesheet variable `styles`
 
     ```js
     labels: {
@@ -75,16 +78,30 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     ```
 
   4. Adds behaviors to the components
+    1. Sync the changes from input string and secret textboxes to `this.state`
+
+      ```js
+      onSecretChange(secret) {
+        this.setState({ secret });
+      }
+
+      onInputStringChange(inputString) {
+        this.setState({ inputString });
+      }
+      ```
+
+  5. Defines default values in constructor
+    1. Default input string is `Hello`
+    2. Default secret is `1234567890123456` (we will use AES128, thus 16 characters long secret will be used)
 
     ```js
-    onSecretChange(secret) {
-      this.setState({ secret });
-      this._encrypt(this.state.inputText, secret).done();
-    }
+    constructor(props) {
+      super(props);
 
-    onInputStringChange(inputString) {
-      this.setState({ inputString });
-      this._encrypt(inputString, this.state.secret).done();
+      this.state = {
+        inputString: 'Hello',
+        secret: '1234567890123456'
+      };
     }
     ```
 
