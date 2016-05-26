@@ -105,4 +105,6 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     }
     ```
 
+## What's next
+
 Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-2).
