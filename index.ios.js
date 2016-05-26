@@ -37,34 +37,6 @@ class EncryptNatively extends Component {
 
   render() {
     return (
-      <Text style={ styles.welcome }>
-        Encrypt with AES128
-      </Text>
-      <Text style={ styles.labels }>Input plaintext</Text>
-      <TextInput
-        autoFocus={ true }
-        onChangeText={ this.onInputStringChange.bind(this) }
-        style={ styles.inputs }
-        value={ this.state.inputString }
-      />
-      <Text style={ styles.labels }>Encryption key (16 characters)</Text>
-      <TextInput
-        onChangeText={ this.onSecretChange.bind(this) }
-        style={ styles.inputs }
-        value={ this.state.secret }
-      />
-      <Text style={ styles.labels }>Ciphertext in BASE64</Text>
-      <TextInput
-        editable={ false }
-        style={ styles.inputs }
-        value={ this.state.ciphertext }
-      />
-      <Text style={ styles.labels }>Plaintext</Text>
-      <TextInput
-        editable={ false }
-        style={ styles.inputs }
-        value={ this.state.plaintext }
-      />
       <View style={ styles.container }>
         <Text style={ styles.welcome }>
           Welcome to React Native!
@@ -76,6 +48,34 @@ class EncryptNatively extends Component {
           Press Cmd+R to reload,{ '\n' }
           Cmd+D or shake for dev menu
         </Text>
+        <Text style={ styles.welcome }>
+          Encrypt with AES128
+        </Text>
+        <Text style={ styles.labels }>Input plaintext</Text>
+        <TextInput
+          autoFocus={ true }
+          onChangeText={ this.onInputStringChange.bind(this) }
+          style={ styles.inputs }
+          value={ this.state.inputString }
+        />
+        <Text style={ styles.labels }>Encryption key (16 characters)</Text>
+        <TextInput
+          onChangeText={ this.onSecretChange.bind(this) }
+          style={ styles.inputs }
+          value={ this.state.secret }
+        />
+        <Text style={ styles.labels }>Ciphertext in BASE64</Text>
+        <TextInput
+          editable={ false }
+          style={ styles.inputs }
+          value={ this.state.ciphertext }
+        />
+        <Text style={ styles.labels }>Plaintext</Text>
+        <TextInput
+          editable={ false }
+          style={ styles.inputs }
+          value={ this.state.plaintext }
+        />
       </View>
     );
   }
