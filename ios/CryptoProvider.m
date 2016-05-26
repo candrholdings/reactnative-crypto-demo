@@ -2,7 +2,7 @@
 //  CryptoProvider.m
 //  EncryptNatively
 //
-//  Created by William Wong on 25/5/2016.
+//  Created by William Wong on 27/5/2016.
 //  Copyright © 2016 Facebook. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 @interface RCT_EXTERN_MODULE(CryptoProvider, NSObject)
 
 RCT_EXTERN_METHOD(
-  translateToHawaiian:(NSString *) english
-  resolve:(RCTPromiseResolveBlock) resolve
-  reject:(RCTPromiseRejectBlock) reject
+  translateEnglishToHawaiian:(NSString *) english
+  resolve:(RCTPromiseResolveBlock *) resolve
+  reject:(RCTPromiseRejectBlock *) reject
 )
 
 RCT_EXTERN_METHOD(

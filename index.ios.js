@@ -10,8 +10,11 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  TextInput,
   View
+} from 'react-native';
+
+import {
+  TextInput
 } from 'react-native';
 
 import {
@@ -28,30 +31,40 @@ class EncryptNatively extends Component {
     };
   }
 
+  componentWillMount() {
+    this._encrypt(this.state.inputString, this.state.secret);
+  }
+
   _encrypt(inputString, secret) {
-    return CryptoProvider.encrypt(inputString, secret)
+    CryptoProvider.encrypt(inputString, secret)
       .then(ciphertext => {
         this.setState({ ciphertext });
-
         return CryptoProvider.decrypt(ciphertext, secret);
       })
       .then(plaintext => {
         this.setState({ plaintext });
-      });
+      })
+      .catch(err => alert(`Failed to encrypt/decrypt due to "${err.message}"`))
+      .done();
   }
 
-  componentWillMount() {
-    this._encrypt(this.state.inputString, this.state.secret).done();
-  }
-
-  onSecretChange(secret) {
-    this.setState({ secret });
-    this._encrypt(this.state.inputString, secret).done();
+  _translate(english) {
+    CryptoProvider.translateEnglishToHawaiian(english)
+      .then(
+        hawaiian => this.setState({ ciphertext: hawaiian }),
+        err => alert(`Failed to translate due to "${err.message}"`)
+      )
+      .done();
   }
 
   onInputStringChange(inputString) {
     this.setState({ inputString });
-    this._encrypt(inputString, this.state.secret).done();
+    this._encrypt(inputString, this.state.secret);
+  }
+
+  onSecretChange(secret) {
+    this.setState({ secret });
+    this._encrypt(this.state.inputString, secret)
   }
 
   render() {
@@ -119,9 +132,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   labels: {
-    textAlign: 'center',
     color: '#333',
     marginBottom: 5,
+    textAlign: 'center'
   },
   inputs: {
     backgroundColor: '#FFF',
@@ -129,8 +142,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     height: 40,
-    textAlign: 'center',
-    marginBottom: 5
+    marginBottom: 5,
+    textAlign: 'center'
   }
 });
 
