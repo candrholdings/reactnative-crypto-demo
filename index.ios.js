@@ -32,7 +32,16 @@ class EncryptNatively extends Component {
   }
 
   componentWillMount() {
-    this._translate(this.state.inputString);
+    this._encrypt(this.state.inputString, this.state.secret);
+  }
+
+  _encrypt(inputString, secret) {
+    CryptoProvider.encrypt(inputString, secret)
+      .then(
+        ciphertext => this.setState({ ciphertext }),
+        err => alert(`Failed to encrypt due to "${err.message}"`)
+      )
+      .done();
   }
 
   _translate(english) {
@@ -46,11 +55,12 @@ class EncryptNatively extends Component {
 
   onInputStringChange(inputString) {
     this.setState({ inputString });
-    this._translate(inputString);
+    this._encrypt(inputString, this.state.secret);
   }
 
   onSecretChange(secret) {
     this.setState({ secret });
+    this._encrypt(this.state.inputString, secret);
   }
 
   render() {

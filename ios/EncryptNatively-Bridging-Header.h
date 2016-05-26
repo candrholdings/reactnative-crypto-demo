@@ -3,3 +3,4 @@
 //
 
 #import "RCTBridgeModule.h"
+#import <CommonCrypto/CommonCrypto.h>

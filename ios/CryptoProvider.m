@@ -17,4 +17,11 @@ RCT_EXTERN_METHOD(
   reject:(RCTPromiseRejectBlock *) reject
 )
 
+RCT_EXTERN_METHOD(
+  encrypt:(NSString *) plaintext
+  secret:(NSString *) secret
+  resolve:(RCTPromiseResolveBlock) resolve
+  reject:(RCTPromiseRejectBlock) reject
+)
+
 @end
