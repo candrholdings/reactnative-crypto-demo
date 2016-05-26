@@ -1,44 +1,82 @@
-# Step 2: Creates a new Swift class
+# Step 3: Adds a new Swift method
 
 ## Objectives
 
-We are going to add a Swift class and make it visible to React Native.
+We are going to add a simple method in Swift. This method will translate English into Hawaiian asynchronously. And we will consumes the function in JavaScript.
 
 ## Steps to achieve
 
-1. Adds an Objective-C class to `extern`-alizing class
-  1. Creates an Objective-C file named `CryptoProvider.m`, it will inherit `NSObject`
-  2. Adds the following code
+1. Defines the translate method in Objective-C
+  1. We will define the `translateEnglishToHawaiian` method, it accept English string and translate to Hawaiian asynchronously
+  2. Add the following code to the file `CryptoProvider.m`
 
-     ```objective-c
-     #import <Foundation/Foundation.h>
-     #import "RCTBridgeModule.h"
+    ```objective-c
+    RCT_EXTERN_METHOD(
+      translateEnglishToHawaiian:(NSString *) english
+      resolve:(RCTPromiseResolveBlock *) resolve
+      reject:(RCTPromiseRejectBlock *) reject
+    )
+    ```
 
-     @interface RCT_EXTERN_MODULE(CryptoProvider, NSObject)
-     @end
-     ```
+2. Implements the method in Swift
+  1. We will implement the `translateEnglishToHawaiian` method, currently, it only understand "Hello" in English and translate to "Aloha" in Hawaiian
+  2. Add the following code to the file `CryptoProvider.swift`
 
-2. Adds a Swift class
-  1. Creates a Swift file named `CryptoProvider.swift`, it should be on parity with Objective-C file and inherit `NSObject`
-  2. It should contains the following code
+    ```swift
+    @objc func translateEnglishToHawaiian(
+      english: String,
+      resolve: RCTPromiseResolveBlock,
+      reject: RCTPromiseRejectBlock
+    ) -> Void {
+      if (english == "Hello") {
+        resolve("Aloha")
+      } else {
+        reject("ENOENT", "I don't know", nil)
+      }
+    }
+    ```
 
-     ```swift
-     import Foundation
+  3. Currently, we only know how to translate "Hello" into "Aloha", otherwise, error will be thrown
 
-     @objc(CryptoProvider)
-     class CryptoProvider: NSObject {
-     }
-     ```
+3. Consumes the `translateEnglishToHawaiian` method in JavaScript
+  1. Imports the Swift method by adding the following code to `index.ios.js`
 
-3. Adds a header file to bridging between Objective-C and Swift
-  1. Creates a header file named `EncryptNatively-Bridging-Header.h`
-    1. Xcode may already created the bridging header file for you
-  2. Adds the following code to enable React Native Modules bridge
+    ```javascript
+    import {
+      CryptoProvider
+    } from 'NativeModules';
+    ```
 
-     ```objective-c
-     #import "RCTBridgeModule.h"
-     ```
+  2. Adds a `_translate` function to run the translation natively and set the result in `this.state`
+
+    ```js
+    _translate(english) {
+      CryptoProvider.translateEnglishToHawaiian(english)
+        .then(
+          hawaiian => this.setState({ ciphertext: hawaiian }),
+          err => alert(`Failed to translate due to "${err.message}"`)
+        ).done();
+    }
+    ```
+
+  3. Calls the `_translate` function as soon as the component initialized
+
+    ```js
+    componentWillMount() {
+      this._translate(this.state.inputString);
+    }
+    ```
+
+  4. Calls the `_translate` function as soon as the input string is changed
+    1. We will modify the existing `onInputStringChange` function
+
+      ```js
+      onInputStringChange(inputString) {
+        this.setState({ inputString });
+        this._translate(inputString);
+      }
+      ```
 
 ## What's next
 
-Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-2).
+Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-4).

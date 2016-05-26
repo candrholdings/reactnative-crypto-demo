@@ -10,4 +10,11 @@
 #import "RCTBridgeModule.h"
 
 @interface RCT_EXTERN_MODULE(CryptoProvider, NSObject)
+
+RCT_EXTERN_METHOD(
+  translateEnglishToHawaiian:(NSString *) english
+  resolve:(RCTPromiseResolveBlock *) resolve
+  reject:(RCTPromiseRejectBlock *) reject
+)
+
 @end

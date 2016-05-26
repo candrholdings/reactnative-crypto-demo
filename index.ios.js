@@ -17,6 +17,10 @@ import {
   TextInput
 } from 'react-native';
 
+import {
+  CryptoProvider
+} from 'NativeModules';
+
 class EncryptNatively extends Component {
   constructor(props) {
     super(props);
@@ -27,12 +31,26 @@ class EncryptNatively extends Component {
     };
   }
 
-  onSecretChange(secret) {
-    this.setState({ secret });
+  componentWillMount() {
+    this._translate(this.state.inputString);
+  }
+
+  _translate(english) {
+    CryptoProvider.translateEnglishToHawaiian(english)
+      .then(
+        hawaiian => this.setState({ ciphertext: hawaiian }),
+        err => alert(`Failed to translate due to "${err.message}"`)
+      )
+      .done();
   }
 
   onInputStringChange(inputString) {
     this.setState({ inputString });
+    this._translate(inputString);
+  }
+
+  onSecretChange(secret) {
+    this.setState({ secret });
   }
 
   render() {
