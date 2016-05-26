@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   labels: {
-    textAlign: 'center',
     color: '#333',
-    marginBottom: 5
+    marginBottom: 5,
+    textAlign: 'center'
   },
   inputs: {
     backgroundColor: '#FFF',
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     height: 40,
-    textAlign: 'center',
-    marginBottom: 5
+    marginBottom: 5,
+    textAlign: 'center'
   }
 });
 
