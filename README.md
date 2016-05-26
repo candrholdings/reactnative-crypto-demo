@@ -16,7 +16,7 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
 1. Adds textboxes to the user interface
   1. Before we can use `TextInput` component from React Native, we will need to import it from `react-native` package
 
-    ```js
+    ```javascript
     import {
       TextInput
     } from 'react-native';
@@ -27,7 +27,7 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     2. Change events from input string and secret textboxes will go back to `this.state`
     3. Styles the UI components
 
-      ```js
+      ```javascript
       <Text style={ styles.welcome }>
         Encrypt with AES128
       </Text>
@@ -60,7 +60,7 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
 
   3. Adds styles to the stylesheet variable `styles`
 
-    ```js
+    ```javascript
     labels: {
       textAlign: 'center',
       color: '#333',
@@ -79,8 +79,9 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
 
   4. Adds behaviors to the components
     1. Sync the changes from input string and secret textboxes to `this.state`
+    2. If the `onChangeText` is not processed, the textbox will become read-only because `render` will keep using the old text from `this.state`
 
-      ```js
+      ```javascript
       onInputStringChange(inputString) {
         this.setState({ inputString });
       }
@@ -94,7 +95,7 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     1. Default input string is `Hello`
     2. Default secret is `1234567890123456` (we will use AES128, thus 16 characters long secret will be used)
 
-    ```js
+    ```javascript
     constructor(props) {
       super(props);
 
