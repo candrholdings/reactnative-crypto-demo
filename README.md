@@ -1,4 +1,4 @@
-# Step 3: Adds an encrypt method
+# Step 4: Adds an encrypt method
 
 ## Objectives
 
@@ -128,4 +128,4 @@ We are going to add another Swift method that encrypt a string with a secret, us
 
 ## What's next
 
-Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-4).
+Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-5).
