@@ -32,7 +32,7 @@ We are going to add a Swift class and make it visible to React Native.
 
 3. Adds a header file to bridging between Objective-C and Swift
   1. Creates a header file named `EncryptNatively-Bridging-Header.h`
-    1. Xcode may already created the bridging header file for you
+    1. Xcode may prompt to create the bridging header file for you
   2. Adds the following code to enable React Native Modules bridge
 
      ```objective-c
@@ -41,4 +41,4 @@ We are going to add a Swift class and make it visible to React Native.
 
 ## What's next
 
-Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-2).
+Go to the [next step](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-3).
