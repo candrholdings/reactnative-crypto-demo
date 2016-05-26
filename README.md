@@ -93,6 +93,6 @@ We are going to add another Swift method that decrypt a BASE64 binary with a sec
 4. Verifies the result
   1. After running the code above, encrypting `Hello` then decrypting it should yield `Hello`
 
-What's next
+## What's next
 
 You have completed this step-by-step guide.
