@@ -81,12 +81,12 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     1. Sync the changes from input string and secret textboxes to `this.state`
 
       ```js
-      onSecretChange(secret) {
-        this.setState({ secret });
-      }
-
       onInputStringChange(inputString) {
         this.setState({ inputString });
+      }
+
+      onSecretChange(secret) {
+        this.setState({ secret });
       }
       ```
 

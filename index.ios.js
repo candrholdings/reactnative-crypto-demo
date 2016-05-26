@@ -27,12 +27,12 @@ class EncryptNatively extends Component {
     };
   }
 
-  onSecretChange(secret) {
-    this.setState({ secret });
-  }
-
   onInputStringChange(inputString) {
     this.setState({ inputString });
+  }
+
+  onSecretChange(secret) {
+    this.setState({ secret });
   }
 
   render() {
