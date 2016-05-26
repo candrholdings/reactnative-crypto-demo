@@ -2,7 +2,7 @@
 
 ## Objectives
 
-We are going to add a simple method in Swift. This method will translate English into Hawaiian asynchronously. And we will consumes the function in JavaScript.
+We are going to add a simple method in Swift. This method will translate English into Hawaiian asynchronously. The method will be consumed in JavaScript.
 
 ## Steps to achieve
 
@@ -38,8 +38,8 @@ We are going to add a simple method in Swift. This method will translate English
 
   3. Currently, we only know how to translate "Hello" into "Aloha", otherwise, error will be thrown
 
-3. Consumes the `translateEnglishToHawaiian` method in JavaScript
-  1. Imports the Swift method by adding the following code to `index.ios.js`
+3. Consumes the `translateEnglishToHawaiian` method in JavaScript, in `index.ios.js`
+  1. Imports the Swift `CryptoProvider` class
 
     ```javascript
     import {
@@ -47,9 +47,11 @@ We are going to add a simple method in Swift. This method will translate English
     } from 'NativeModules';
     ```
 
-  2. Adds a `_translate` function to run the translation natively and set the result in `this.state`
+  2. Adds a `_translate` function to run the translation natively
+    1. The function asks for the english text because `this.state` does not support dirty read
+    3. The result text will be shown in the ciphertext textbox
 
-    ```js
+    ```javascript
     _translate(english) {
       CryptoProvider.translateEnglishToHawaiian(english)
         .then(
@@ -59,18 +61,18 @@ We are going to add a simple method in Swift. This method will translate English
     }
     ```
 
-  3. Calls the `_translate` function as soon as the component initialized
+  3. Calls the `_translate` function as soon as the component is initialized
 
-    ```js
+    ```javascript
     componentWillMount() {
       this._translate(this.state.inputString);
     }
     ```
 
-  4. Calls the `_translate` function as soon as the input string is changed
+  4. Calls the `_translate` function as soon as the input string has changed
     1. We will modify the existing `onInputStringChange` function
 
-      ```js
+      ```javascript
       onInputStringChange(inputString) {
         this.setState({ inputString });
         this._translate(inputString);
