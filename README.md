@@ -13,10 +13,10 @@ Every step has its own README.md file, you should start reading from [step 1](ht
 
 | Step                                                                            | Topic                     |
 | ------------------------------------------------------------------------------- | ------------------------- |
-| [Step 1](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-1/) | Creates a new Swift class |
-| [Step 2](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-2/) | Adds a new Swift method   |
-| [Step 3](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-3/) | Adds an encrypt method    |
-| [Step 4](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-4/) | Adds a decrypt method     |
-| [Step 5](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-5/) | Adds an UI form           |
+| [Step 1](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-1/) | Adds UI components        |
+| [Step 2](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-2/) | Creates a new Swift class |
+| [Step 3](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-3/) | Adds a new Swift method   |
+| [Step 4](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-4/) | Adds an encrypt method    |
+| [Step 5](https://github.com/candrholdings/reactnative-crypto-demo/tree/step-5/) | Adds a decrypt method     |
 
 If you like our guide, please [star](https://github.com/candrholdings/reactnative-crypto-demo/stargazers) us.
