@@ -95,16 +95,16 @@ We are going to laydown our plan for the UI. We will add a few textboxes:
     1. Default input string is `Hello`
     2. Default secret is `1234567890123456` (we will use AES128, thus 16 characters long secret will be used)
 
-    ```javascript
-    constructor(props) {
-      super(props);
+      ```javascript
+      constructor(props) {
+        super(props);
 
-      this.state = {
-        inputString: 'Hello',
-        secret: '1234567890123456'
-      };
-    }
-    ```
+        this.state = {
+          inputString: 'Hello',
+          secret: '1234567890123456'
+        };
+      }
+      ```
 
 ## What's next
 
